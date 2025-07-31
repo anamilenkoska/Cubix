@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import AppRoutes from './AppRoutes';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <AppRoutes />
   </React.StrictMode>
 );
+
+function importAll(r){
+  r.keys().forEach(r);
+}
+importAll(require.context('./components',true,/\.css$/))  //to import all css files
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

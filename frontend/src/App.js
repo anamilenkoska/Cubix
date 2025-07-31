@@ -1,28 +1,38 @@
 import './App.css';
-import Homepage from "./components/home/Homepage"
-//import CubesList from './components/cubes/CubesList'
+import { Outlet } from 'react-router';
+import React from 'react';
+import { Navigate } from 'react-router'
+// function App() {
+//   return (
 
-function App() {
-  return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-    <Homepage/>
-    //<CubesList/>
-  );
+
+
+//     //<SignLogpage/>
+//     <Homepage/>
+//     //<CubesList/>
+//   );
+// }
+
+class App extends React.Component {
+  state = {
+    user: null,
+  }
+  handleLogin = (username) => {
+    this.setState({ user: { name: username } })
+  }
+
+  handleLogout = () => {
+    this.setState({ user: null })
+  }
+
+  render() {
+    return (
+
+      //<Outlet />
+      <Outlet context={{ user: this.state.user, onLogin: this.handleLogin, onLogout: this.handleLogout }} />
+
+    )
+  }
 }
 
 export default App;
