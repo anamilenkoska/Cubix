@@ -55,4 +55,29 @@ users.post('/login', async (req, res) => {
     res.send()
 })
 
+users.get('/session', async(req,res,next)=>{
+    try{
+        console.log("session data: ")
+        console.log(req.session)
+        res.json(res.session)
+    }catch(e){
+        console.log(e)
+        res.sendStatus(500)
+        next()
+    }
+})
+
+users.get('/logout', async(req,res,next)=>{
+    try{
+        req.session.destroy(function(err){
+            res.json({status:{success:true,msg:err}})
+        })
+    }catch(e){
+        console.log(e)
+        res.json({status:{success:false,msg:e}})
+        res.sendStatus(500)
+        next()
+    }
+})
+
 module.exports = users

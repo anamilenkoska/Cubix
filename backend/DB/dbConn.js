@@ -56,4 +56,15 @@ dataPool.authUser=(username)=>{
     })
 }
 
+dataPool.getScramble=(cubeType)=>{
+    return new Promise((resolve,reject)=>{
+        conn.query('SELECT * FROM Scramble WHERE CubeType=? ORDER BY RAND() LIMIT 1',[cubeType], (err,res)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(res[0])
+        })
+    })
+}
+
 module.exports = dataPool
