@@ -24,7 +24,6 @@ function Login(){
         }
         try{
             const res=await api.post('/users/login',formData)
-            alert('Logged in')
             onLogin(formData.username)
             navigate('/')
         }catch(err){

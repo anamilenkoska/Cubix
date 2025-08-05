@@ -4,6 +4,8 @@ import Homepage from './components/home/Homepage';
 import App from './App'
 import Signin from './components/pages/Signin';
 import Login from './components/pages/Login'
+import Logout from './components/pages/Logout'
+import LandingPage from './components/home/LandingPage'
 
 class AppRoutes extends Component{
     render(){
@@ -11,9 +13,11 @@ class AppRoutes extends Component{
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<App/>}>
-                        <Route index element={<Homepage/>}/>
+                        <Route index element={<LandingPage/>}/>
+                        <Route path='/homepage' element={<Homepage/>}/>
                         <Route path="/signin" element={<Signin/>}/>
                         <Route path="/login" element={<Login/>}/>
+                        <Route path="/logout" element={<Logout/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>

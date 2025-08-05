@@ -1,0 +1,31 @@
+.signin {
+    max-width: 400px;
+    margin: 5rem auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.signin form{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.signin input,.signin select,.signin button{
+    padding: 8px;
+    font-size: 16px;
+    border:1px solid black;
+    border-radius: 4px;
+}
+
+.signin button{
+    cursor: pointer;
+    background-color: #007bff;
+    color:white;
+    transition: background-color 0.3s ease;
+}
+
+.signin button:hover{
+    background-color: #0056b3;
+}

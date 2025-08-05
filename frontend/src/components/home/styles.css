@@ -1,0 +1,36 @@
+.login{
+    max-width: 400px;
+    margin: 5rem auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.login form{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.login input,.login select,.login button{
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.login button{
+    cursor: pointer;
+    background-color: #007bff;
+    color:white;
+    transition: background-color 0.3s ease;
+}
+
+.login button:hover{
+    background-color: #0056b3;
+}
+
+.login p{
+    margin-top: 16px;
+    font-size: 14px;
+}

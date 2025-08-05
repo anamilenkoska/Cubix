@@ -11,10 +11,10 @@ root.render(
   </React.StrictMode>
 );
 
-function importAll(r){
-  r.keys().forEach(r);
-}
-importAll(require.context('./components',true,/\.css$/))  //to import all css files
+// function importAll(r){
+//   r.keys().forEach(r);
+// }
+// importAll(require.context('./components',true,/\.css$/))  //to import all css files
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

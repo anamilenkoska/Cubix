@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import axios from 'axios';
 import api from '../../services/api'
 import { useOutletContext } from 'react-router-dom'
@@ -6,40 +6,83 @@ import { useOutletContext } from 'react-router-dom'
 function Homepage() {
     const { user } = useOutletContext()
     const [cubeTypes, setCubeType] = useState([]);
+    const [selectedCube, setSelectedCube] = useState('')
+    const [scramble, setScramble] = useState(null)
+
+    const handleCubeType = (e) => {
+        const selected = e.target.value
+        setSelectedCube(selected)
+
+        if (selected) {
+            api.get(`/scrambles/${selected}`)
+                .then(res => setScramble(res.data))
+                .catch(err => console.log(err))
+        } else {
+            setScramble(null)
+        }
+    }
+
+    const handleNext = () => {
+        if (selectedCube) {
+            api.get(`/scrambles/${selectedCube}`)
+                .then(res => setScramble(res.data))
+                .catch(err => console.log(err))
+        }
+    }
 
     useEffect(() => {
-        console.log('page mounted')
         api.get('/')
             .then((res) => {
                 const types = res.data.map(cube => cube.CubeType);
                 setCubeType(types);
             })
             .catch((err) => console.log(err));
-    }, [])
+    }, [user])
 
     return (
         <div className="page-container">
             <div className="header">
-                {/* <div className="tab-buttons">
-                    <a className="tab-link" href="/signin">Sign in</a>
-                    <a className="tab-link" href="/login">Log in</a>
-                </div> */}
-
-                <div className="tab-buttons">
+                <div className="top-bar">
                     {user ? (
-                        <>Hi, { user.name }</>
-                    ) : (
                         <>
+                            <div className="top-left">
+                                <span className="greeting">Hello, {user.name}</span>
+                            </div>
+                            <div className="top-right">
+                                <a className="tab-link" href="/logout">Log out</a>
+                            </div>
+                        </>
+                    ) : (
+                        <div className="top-left">
                             <a className="tab-link" href="/signin">Sign in</a>
                             <a className="tab-link" href="/login">Log in</a>
-                        </>
+                        </div>
                     )}
                 </div>
-
                 <h1>CUBIX</h1>
+                <div className="dropdown-container">
+                    <select className="dropdown" value={selectedCube} onChange={handleCubeType}>
+                        <option value="">--</option>
+                        {
+                            cubeTypes.map((type, index) => (
+                                <option key={index} value={type}>{type}</option>
+                            ))
+                        }
+                    </select>
+                    Scramble
+                    <span className="scramble">
+                        &nbsp;
+                        {scramble ? scramble.Steps : '--'}
+                    </span>
+                    <button
+                        onClick={handleNext}
+                        disabled={!selectedCube}
+                        className="next-button">
+                        Next
+                    </button>
+                </div>
 
             </div>
-
             <div className="main-wrapper">
                 <div className="sidebar">
                     <div className="leftbar">
@@ -51,18 +94,9 @@ function Homepage() {
                     <div className="leftbar2"><h3 className="leftbar2Text">Average time:</h3></div>
                 </div>
 
-                <div className="main-content">
-                    <div className="dropdown-container">
-                        <select className="dropdown">
-                            <option value="">--</option>
-                            {
-                                cubeTypes.map((type, index) => (
-                                    <option key={index} value={type}>{type}</option>
-                                ))
-                            }
-                        </select>
-                    </div>
-                </div>
+                {/* <div className="main-content">
+
+                </div> */}
             </div>
 
             <footer className="footer">
