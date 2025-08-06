@@ -90,7 +90,7 @@ function Homepage() {
                     </button>
                 </div>
                 <div>
-                    {scramble && <CubeTimer scrambleId={scramble.ScrambleId}/>}
+                    {scramble && <CubeTimer scrambleId={scramble.ScrambleId} cubeType={selectedCube} setScramble={setScramble}/>}
                 </div>
 
             </div>

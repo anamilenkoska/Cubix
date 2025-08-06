@@ -2,7 +2,7 @@ import React, {useEffect,useState,useRef} from 'react'
 import api from '../../services/api'
 import './styles.css'
 
-const CubeTimer=({scrambleId})=>{
+const CubeTimer=({scrambleId,cubeType,setScramble})=>{
     const [timer,setTimer]=useState(0)
     const [status,setStatus]=useState('idle')
     const [userId,setUserId]=useState(null)
@@ -76,6 +76,7 @@ const CubeTimer=({scrambleId})=>{
         const solving_date=new Date().toISOString().slice(0,19).replace('T', ' ');
         setStatus('idle')
         saveAttempt(userId,scrambleId,solving_time,solving_date)
+        fetchNewScramble()
     }
 
     const saveAttempt=async(userId,scrambleId,solving_time,solving_date)=>{
@@ -95,12 +96,13 @@ const CubeTimer=({scrambleId})=>{
         }
     }
 
-    const getBackgroundColor=()=>{
-        switch(status){
-            case 'holding':return 'red';
-            case 'ready':return 'green';
-            case 'running':return 'white';
-            default:return '#ccc';
+    const fetchNewScramble=async()=>{
+        if(!cubeType) return
+        try{
+            const res=await api.get(`/scrambles/${cubeType}`)
+            setScramble(res.data)
+        }catch(err){
+            console.log('Error:',err)
         }
     }
 
