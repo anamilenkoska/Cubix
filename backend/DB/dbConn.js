@@ -36,7 +36,7 @@ dataPool.addUser = (username, email, password, role) => {
             if (err) {
                 return reject(err)
             }
-            conn.query('INSERT INTO User (username,email,password,role) VALUES (?,?,?,?)', [username, email, hashedPassword,role], (err, res, fileds) => {
+            conn.query('INSERT INTO User (username,email,password,role) VALUES (?,?,?,?)', [username, email, hashedPassword,role], (err, res) => {
                 if (err) { return reject(err) }
                 return resolve(res)
                 console.log("received:",username,email,hashedPassword,role)
@@ -63,6 +63,15 @@ dataPool.getScramble=(cubeType)=>{
                 return reject(err)
             }
             return resolve(res[0])
+        })
+    })
+}
+
+dataPool.addAttempt=(userId,scrambleId,solving_time,solving_date)=>{
+    return new Promise((resolve,reject)=>{
+        conn.query('INSERT INTO Attempt (UserId,ScrambleId,Solving_time,Solving_date) VALUES (?,?,?,?)',[userId,scrambleId,solving_time,solving_date],(err,res)=>{
+            if(err){ return reject(err)}
+            return resolve(res)
         })
     })
 }

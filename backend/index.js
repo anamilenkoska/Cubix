@@ -4,13 +4,24 @@ const app=express()
 const port=process.env.PORT || 8886
 const cors=require('cors')
 const DB=require('./DB/dbConn.js')
+const session=require('express-session')
 
 app.use(express.json())
 app.use(express.urlencoded({extended : true}));
 app.use(cors({
-   origin: 'http://88.200.63.148:3002',
+   origin: 'http://88.200.63.148:3000',
    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
    credentials: true
+}))
+app.use(session({
+    secret:'secret_key',
+    resave:false,
+    saveUninitialized:false,
+    cookie:{
+        httpOnly:true,
+        maxAge:1000*60*60,
+        secure:false
+    }
 }))
 
 //shows the info of the db in the browser
@@ -35,3 +46,5 @@ app.use('/users',users)
 const scrambles=require('./routes/scrambles')
 app.use(scrambles)
 
+const attempts=require('./routes/attempts');
+app.use('/attempts',attempts)
