@@ -1,0 +1,43 @@
+.timer-container{
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1000;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+.timer-box{
+    font-size: 120px;
+    font-family: monospace;
+    color:black;
+    user-select: none;
+    pointer-events: auto;
+}
+
+.timer-box.idle{
+    color:black;
+}
+
+.timer-box.holding{
+    color:red !important;
+}
+
+.timer-box.ready{
+    color:green !important;
+}
+
+.timer-box.running{
+    color:black !important;
+}
+
+.text-label{
+    font-size: 40px;
+    margin-left:4px;
+}

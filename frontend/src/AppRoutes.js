@@ -3,7 +3,6 @@ import {BrowserRouter, Routes, Route} from 'react-router';
 import Homepage from './components/home/Homepage';
 import App from './App'
 import Signin from './components/pages/Signin';
-import Login from './components/pages/Login'
 import Logout from './components/pages/Logout'
 import LandingPage from './components/home/LandingPage'
 
@@ -16,7 +15,6 @@ class AppRoutes extends Component{
                         <Route index element={<LandingPage/>}/>
                         <Route path='/homepage' element={<Homepage/>}/>
                         <Route path="/signin" element={<Signin/>}/>
-                        <Route path="/login" element={<Login/>}/>
                         <Route path="/logout" element={<Logout/>}/>
                     </Route>
                 </Routes>

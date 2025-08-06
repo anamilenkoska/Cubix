@@ -17,12 +17,20 @@ class App extends React.Component {
   state = {
     user: null,
   }
-  handleLogin = (username) => {
-    this.setState({ user: { name: username } })
+  // handleLogin = (username) => {
+  //   this.setState({ user: userObj })
+  // }
+
+  // handleLogout = () => {
+  //   this.setState({ user: null })
+  // }
+
+  handleLogin=(user)=>{
+    this.setState({user})
   }
 
-  handleLogout = () => {
-    this.setState({ user: null })
+  handleLogout=()=>{
+    this.setState({user:null})
   }
 
   render() {

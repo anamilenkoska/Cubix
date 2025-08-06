@@ -1,10 +1,11 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import api from '../../services/api'
 import { useOutletContext } from 'react-router-dom'
+import CubeTimer from '../cubeTimer/CubeTimer'
 
 function Homepage() {
-    const { user } = useOutletContext()
+    const { user,onLogin,onLogout } = useOutletContext()
     const [cubeTypes, setCubeType] = useState([]);
     const [selectedCube, setSelectedCube] = useState('')
     const [scramble, setScramble] = useState(null)
@@ -30,6 +31,18 @@ function Homepage() {
         }
     }
 
+    useEffect(()=>{
+        api.get('/users/session')
+        .then(res=>{
+            if(res.data.user){
+                onLogin(res.data.user)
+            }
+        })
+        .catch(()=>{
+            onLogout()
+        })
+    },[])
+
     useEffect(() => {
         api.get('/')
             .then((res) => {
@@ -46,18 +59,13 @@ function Homepage() {
                     {user ? (
                         <>
                             <div className="top-left">
-                                <span className="greeting">Hello, {user.name}</span>
+                                <span className="greeting">Hello, {user.username}</span>
                             </div>
                             <div className="top-right">
                                 <a className="tab-link" href="/logout">Log out</a>
                             </div>
                         </>
-                    ) : (
-                        <div className="top-left">
-                            <a className="tab-link" href="/signin">Sign in</a>
-                            <a className="tab-link" href="/login">Log in</a>
-                        </div>
-                    )}
+                    ):null}
                 </div>
                 <h1>CUBIX</h1>
                 <div className="dropdown-container">
@@ -78,8 +86,11 @@ function Homepage() {
                         onClick={handleNext}
                         disabled={!selectedCube}
                         className="next-button">
-                        Next
+                        Reset
                     </button>
+                </div>
+                <div>
+                    {scramble && <CubeTimer scrambleId={scramble.ScrambleId}/>}
                 </div>
 
             </div>

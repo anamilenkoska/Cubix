@@ -27,8 +27,11 @@ function Signin() {
         }
         try {
             const res = await api.post('/users/signin', formData)
-            onLogin(username)  //set the user in App
-            navigate('/homepage')
+            if (res.data.user) {
+                onLogin(res.data.user)  //set the user in App
+                navigate('/homepage')
+            }
+
         } catch (err) {
             alert('sign in failed')
         }
