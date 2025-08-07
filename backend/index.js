@@ -48,3 +48,6 @@ app.use(scrambles)
 
 const attempts=require('./routes/attempts');
 app.use('/attempts',attempts)
+
+const algorithms=require('./routes/algorithms')
+app.use('/algorithms',algorithms)

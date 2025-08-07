@@ -76,4 +76,13 @@ dataPool.addAttempt=(userId,scrambleId,solving_time,solving_date)=>{
     })
 }
 
+dataPool.getAlgorithm=(cubeType)=>{
+    return new Promise((resolve,reject)=>{
+        conn.query('SELECT * FROM Algorithm WHERE CubeType=?',[cubeType],(err,res)=>{
+            if(err){return reject(err)}
+            return resolve(res)
+        })
+    })
+}
+
 module.exports = dataPool
