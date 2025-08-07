@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import api from '../../services/api'
 import { useOutletContext, useNavigate } from 'react-router-dom'
 import './style.css'
@@ -36,6 +36,13 @@ function Signin() {
             alert('sign in failed')
         }
     }
+
+    useEffect(()=>{
+        document.body.style.overflow='hidden'
+        return()=>{
+            document.body.style.overflow='auto'
+        }
+    },[])
 
     return (
         <div className="signin">

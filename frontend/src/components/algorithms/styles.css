@@ -1,0 +1,60 @@
+.algorithm-container {
+    position: relative;
+    padding: 20px;
+    overflow: visible;
+}
+
+.algorithm-block {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.top-right {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.tab-link {
+    padding: 8px 10px;
+    background-color: lightblue;
+    border: 2px solid gray;
+    border-radius: 8px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.steps-text {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+img {
+    width: 270px;
+    height: 170px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.footer {
+    height: 60px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    line-height: 60px;
+    font-size: 14px;
+    position: relative;
+}

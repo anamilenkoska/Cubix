@@ -5,6 +5,7 @@ import App from './App'
 import Signin from './components/pages/Signin';
 import Logout from './components/pages/Logout'
 import LandingPage from './components/home/LandingPage'
+import AlgorithmPage from './components/algorithms/AlgorithmPage';
 
 class AppRoutes extends Component{
     render(){
@@ -16,6 +17,7 @@ class AppRoutes extends Component{
                         <Route path='/homepage' element={<Homepage/>}/>
                         <Route path="/signin" element={<Signin/>}/>
                         <Route path="/logout" element={<Logout/>}/>
+                        <Route path='/algorithms/:cubeType' element={<AlgorithmPage/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>
