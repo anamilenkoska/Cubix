@@ -85,4 +85,27 @@ dataPool.getAlgorithm=(cubeType)=>{
     })
 }
 
+dataPool.getStats=(userId)=>{
+    return new Promise((resolve,reject)=>{
+        conn.query('SELECT MIN(Solving_time) AS pb, MAX(Solving_time) AS worst, AVG(Solving_time) AS average FROM Attempt WHERE UserId=?',[userId],(err,res)=>{
+            if(err){return reject(err)}
+            return resolve(res[0])
+        })
+    })
+}
+
+dataPool.getReport=(userId)=>{
+    return new Promise((resolve,reject)=>{
+        conn.query(`SELECT a.Solving_time, a.Solving_date,u.username,
+            s.Steps as scramble,s.CubeType as cubeType 
+            FROM Attempt a 
+            JOIN User u ON a.UserId=u.UserId 
+            JOIN Scramble s ON a.ScrambleId=s.ScrambleId 
+            WHERE a.UserId=? ORDER BY a.Solving_date DESC LIMIT 1`,[userId],(err,res)=>{
+                if(err){return reject(err)}
+                return resolve(res[0] || null)
+            })
+    })
+}
+
 module.exports = dataPool

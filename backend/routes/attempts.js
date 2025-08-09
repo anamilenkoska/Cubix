@@ -16,4 +16,27 @@ attempts.post('/',async(req,res)=>{
     }
 })
 
+attempts.get('/stats/:userId',async(req,res)=>{
+    const userId=req.params.userId
+    try{
+        const stats=await DB.getStats(userId)
+        res.json(stats)
+    }catch(err){
+        res.status(500).json({message:'Error: ',err})
+    }
+})
+
+attempts.get('/last/:userId',async(req,res)=>{
+    try{
+        const data=await DB.getReport(req.params.userId)
+        if(!data){
+            return res.status(400).json({message:'No attempts found'})
+        }
+        res.json(data)
+    }catch(err){
+        console.log(err)
+        res.status(500).json({message:"Database error"})
+    }
+})
+
 module.exports=attempts;
