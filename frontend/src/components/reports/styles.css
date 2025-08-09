@@ -1,0 +1,68 @@
+.report {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    position: relative;
+}
+
+.report-header {
+    text-align: center;
+    font-weight: bold;
+}
+
+.report-info {
+    margin-top: 20px;
+    padding: 30px;
+    font-size: 20px;
+}
+
+.username-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.user-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    font-size: 24px;
+}
+
+.top-right {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.tab-link {
+    padding: 8px 10px;
+    background-color: lightblue;
+    border: 2px solid gray;
+    border-radius: 8px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.footer {
+    height: 60px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    line-height: 60px;
+    font-size: 14px;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+}

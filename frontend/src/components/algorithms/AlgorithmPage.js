@@ -43,23 +43,27 @@ function AlgorithmPage() {
                 <a className="tab-link" href="/logout">Log out</a>
             </div>
             <h2>Algorithm for {cubeType} Cube</h2>
-            {algorithms.map((algo, index) => (
-                <div key={index} className="algorithm-block">
-                    <h3>Difficulty: {algo.Difficulty_level}</h3>
-                    <p><strong>Step: {algo.Description}</strong></p>
-                    <p className="steps-text">{algo.Steps}</p>
-                    <div className="step-item">
-                        {stepImage(algo.Description, cubeType).map((path, imgIndex) => (
-                            <img key={`${algo.Description}-${imgIndex}`}
-                                src={path}
-                                alt={`${algo.Description} ${imgIndex}`}
-                                onError={(e) => {
-                                    e.target.style.display = 'none';
-                                }} />
-                        ))}
+            {algorithms.length === 0 ? (
+                <p>Stay tuned for new algorithms</p>
+            ) : (
+                algorithms.map((algo, index) => (
+                    <div key={index} className="algorithm-block">
+                        <h3>Difficulty: {algo.Difficulty_level}</h3>
+                        <p><strong>Step: {algo.Description}</strong></p>
+                        <p className="steps-text">{algo.Steps}</p>
+                        <div className="step-item">
+                            {stepImage(algo.Description, cubeType).map((path, imgIndex) => (
+                                <img key={`${algo.Description}-${imgIndex}`}
+                                    src={path}
+                                    alt={`${algo.Description} ${imgIndex}`}
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                    }} />
+                            ))}
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))
+            )}
             <footer className="footer">
                 <p>&copy; {new Date().getFullYear()} All rights reserved.</p>
             </footer>
