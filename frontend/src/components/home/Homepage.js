@@ -9,6 +9,9 @@ function Homepage() {
     const [cubeTypes, setCubeType] = useState([]);
     const [selectedCube, setSelectedCube] = useState('')
     const [scramble, setScramble] = useState(null)
+    const [stats,setStats]=useState({pb:'--',worst:'--',average:'--'})
+
+    const [userId,setUserId]=useState(null)
 
     const navigate=useNavigate()
 
@@ -38,6 +41,10 @@ function Homepage() {
         .then(res=>{
             if(res.data.user){
                 onLogin(res.data.user)
+
+                setUserId(res.data.user.id)
+
+                fetchStats(res.data.user.id)
             }
         })
         .catch(()=>{
@@ -53,6 +60,23 @@ function Homepage() {
             })
             .catch((err) => console.log(err));
     }, [user])
+
+    const fetchStats=(UserId)=>{
+        api.get(`/attempts/stats/${UserId}`)
+        .then(res=>{
+            console.log('Stats:',res.data)
+            if(res.data){
+                setStats({
+                    pb: res.data.pb !== null ? parseFloat(res.data.pb).toFixed(2) : '--',
+                    worst: res.data.worst !== null ? parseFloat(res.data.worst).toFixed(2) : '--',
+                    average: res.data.average !== null ? parseFloat(res.data.average).toFixed(2) : '--'
+                })
+            }
+        })
+        .catch(err=>{
+            console.log("Error: ",err)
+        })
+    }
 
     return (
         <div className="page-container">
@@ -92,7 +116,9 @@ function Homepage() {
                     </button>
                 </div>
                 <div>
-                    {scramble && <CubeTimer scrambleId={scramble.ScrambleId} cubeType={selectedCube} setScramble={setScramble}/>}
+                    {scramble && 
+                    <CubeTimer scrambleId={scramble.ScrambleId} 
+                    cubeType={selectedCube} setScramble={setScramble} userId={user?.id} refreshStats={()=>fetchStats(user.id)}/>}
                 </div>
 
             </div>
@@ -111,16 +137,14 @@ function Homepage() {
                             <button onClick={()=>navigate(`/algorithms/${selectedCube}`)} disabled={!selectedCube} className="learn-button">Get Algorithm</button>
                     
                     </div>
-                    <div className="leftbar2"><h3 className="leftbar2Text">PB:</h3></div>
-                    <div className="leftbar2"><h3 className="leftbar2Text">Worst time:</h3></div>
-                    <div className="leftbar2"><h3 className="leftbar2Text">Average time:</h3></div>
+                    <div className="leftbar2"><h3 className="leftbar2Text">PB:{stats.pb}</h3></div>
+                    <div className="leftbar2"><h3 className="leftbar2Text">Worst time:{stats.worst}</h3></div>
+                    <div className="leftbar2"><h3 className="leftbar2Text">Average time:{stats.average}</h3></div>
                 </div>
-
-                {/* <div className="main-content">
-
-                </div> */}
+                <div className="leftbar2">
+                    <button onClick={()=>navigate('/report')}>View report</button>
+                </div>
             </div>
-
             <footer className="footer">
                 <p>&copy; {new Date().getFullYear()} All rights reserved.</p>
             </footer>

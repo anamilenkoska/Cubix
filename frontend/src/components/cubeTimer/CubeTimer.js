@@ -2,25 +2,25 @@ import React, {useEffect,useState,useRef} from 'react'
 import api from '../../services/api'
 import './styles.css'
 
-const CubeTimer=({scrambleId,cubeType,setScramble})=>{
+const CubeTimer=({scrambleId,cubeType,setScramble,userId,refreshStats})=>{
     const [timer,setTimer]=useState(0)
     const [status,setStatus]=useState('idle')
-    const [userId,setUserId]=useState(null)
+    //const [userId,setUserId]=useState(null)
     const intervalRef=useRef(null)
     const holdTimeoutRef=useRef(null)
 
     //fetch user
-    useEffect(()=>{
-        const fetchUser=async()=>{
-            try{
-                const res=await api.get('/users/session',{withCredentials:true})
-                setUserId(res.data.user.id)
-            }catch(err){
-                console.log("Session error:",err)
-            }
-        }
-        fetchUser()
-    },[])
+    // useEffect(()=>{
+    //     const fetchUser=async()=>{
+    //         try{
+    //             const res=await api.get('/users/session',{withCredentials:true})
+    //             setUserId(res.data.user.id)
+    //         }catch(err){
+    //             console.log("Session error:",err)
+    //         }
+    //     }
+    //     fetchUser()
+    // },[])
 
     useEffect(()=>{
         const handleKeyDown=(e)=>{
@@ -75,7 +75,9 @@ const CubeTimer=({scrambleId,cubeType,setScramble})=>{
         const solving_time=parseFloat(timerRef.current.toFixed(2))
         const solving_date=new Date().toISOString().slice(0,19).replace('T', ' ');
         setStatus('idle')
-        saveAttempt(userId,scrambleId,solving_time,solving_date)
+        saveAttempt(userId,scrambleId,solving_time,solving_date).then(()=>{
+            if(refreshStats) refreshStats()
+        })
         fetchNewScramble()
     }
 
