@@ -30,7 +30,7 @@ function AlgorithmPage() {
 
         imagePaths.push(`${basePath}${baseName}.jpg`)
 
-        for (let i = 1; i <= 5; i++) {
+        for (let i = 1; i <= 10; i++) {
             imagePaths.push(`${basePath}${baseName}_${i}.jpg`)
         }
         return imagePaths
@@ -44,7 +44,7 @@ function AlgorithmPage() {
             </div>
             <h2>Algorithm for {cubeType} Cube</h2>
             {algorithms.length === 0 ? (
-                <p>Stay tuned for new algorithms</p>
+                <p>Stay tuned for new algorithms.</p>
             ) : (
                 algorithms.map((algo, index) => (
                     <div key={index} className="algorithm-block">
