@@ -9,7 +9,7 @@ const session=require('express-session')
 app.use(express.json())
 app.use(express.urlencoded({extended : true}));
 app.use(cors({
-   origin: 'http://88.200.63.148:3001',
+   origin: 'http://88.200.63.148:3000',
    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
    credentials: true
 }))
@@ -51,3 +51,6 @@ app.use('/attempts',attempts)
 
 const algorithms=require('./routes/algorithms')
 app.use('/algorithms',algorithms)
+
+const profile=require('./routes/profiles')
+app.use('/profile',profile)

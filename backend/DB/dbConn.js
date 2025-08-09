@@ -56,9 +56,9 @@ dataPool.authUser=(username)=>{
     })
 }
 
-dataPool.getScramble=(cubeType)=>{
+dataPool.getScramble=(cubeType,difficulty)=>{
     return new Promise((resolve,reject)=>{
-        conn.query('SELECT * FROM Scramble WHERE CubeType=? ORDER BY RAND() LIMIT 1',[cubeType], (err,res)=>{
+        conn.query('SELECT * FROM Scramble WHERE CubeType=? AND Difficulty_level=? ORDER BY RAND() LIMIT 1',[cubeType,difficulty], (err,res)=>{
             if(err){
                 return reject(err)
             }
@@ -97,13 +97,27 @@ dataPool.getStats=(userId)=>{
 dataPool.getReport=(userId)=>{
     return new Promise((resolve,reject)=>{
         conn.query(`SELECT a.Solving_time, a.Solving_date,u.username,
-            s.Steps as scramble,s.CubeType as cubeType 
+            s.Steps as scramble,s.CubeType as cubeType,s.Difficulty_level as difficulty 
             FROM Attempt a 
             JOIN User u ON a.UserId=u.UserId 
             JOIN Scramble s ON a.ScrambleId=s.ScrambleId 
             WHERE a.UserId=? ORDER BY a.Solving_date DESC LIMIT 1`,[userId],(err,res)=>{
                 if(err){return reject(err)}
                 return resolve(res[0] || null)
+            })
+    })
+}
+
+dataPool.viewProfile=(userId)=>{
+    return new Promise((resolve,reject)=>{
+        conn.query(`SELECT u.username,u.role,u.logindate,
+            COUNT (a.AttemptId) AS total_solves
+            FROM User u 
+            LEFT JOIN Attempt a ON u.UserId=a.UserId
+            WHERE u.UserId=?
+            GROUP BY u.UserId, u.username, u.role, u.logindate`, [userId],(err,res)=>{
+                if(err){return reject(err)}
+                return resolve(res[0])
             })
     })
 }
