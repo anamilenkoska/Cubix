@@ -9,6 +9,14 @@ attempts.post('/',async(req,res)=>{
     }
     try{
         const result=await DB.addAttempt(userId,scrambleId,solving_time,solving_date)
+
+        const attemptId=result.insertId;
+        const stats=await DB.getStats(userId)
+        const pb=stats.pb
+        const average_time=stats.average
+        const supervisorId=await DB.getSupervisor();
+        await DB.addReport(userId,pb,average_time,supervisorId,attemptId)
+
         res.status(201).json({message:'Attempt saved',result})
     }catch(err){
         console.log(err)
