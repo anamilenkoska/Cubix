@@ -58,7 +58,7 @@ function AlgorithmPage() {
                                     alt={`${algo.Description} ${imgIndex}`}
                                     onError={(e) => {
                                         e.target.style.display = 'none';
-                                    }} />
+                                }} />
                             ))}
                         </div>
                     </div>

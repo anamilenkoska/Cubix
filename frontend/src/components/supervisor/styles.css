@@ -1,0 +1,26 @@
+.supervisor-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.text{
+    font-weight: bold;
+}
+
+.premium{
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #0078FF;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.premium:hover{
+    background-color: #358df2;
+}

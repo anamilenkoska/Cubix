@@ -5,10 +5,9 @@
     position: relative;
 }
 
-.profile-container h1{
+.profile-header{
     text-align: center;
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-weight: bold;
 }
 
 .profile-info{

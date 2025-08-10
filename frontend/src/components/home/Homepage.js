@@ -19,15 +19,6 @@ function Homepage() {
     const handleCubeType = (e) => {
         const selected = e.target.value
         setSelectedCube(selected)
-
-        // if (selected) {
-        //     api.get(`/scrambles/${selected}`)
-        //         .then(res => setScramble(res.data))
-        //         .catch(err => console.log(err))
-        // } else {
-        //     setScramble(null)
-        // }
-
         if (selected && difficulty) {
             fetchScramble(selected, difficulty)
         } else {
@@ -54,16 +45,9 @@ function Homepage() {
             .catch(err => {
                 console.log(err)
             })
-
     }
 
     const handleNext = () => {
-        // if (selectedCube) {
-        //     api.get(`/scrambles/${selectedCube}`)
-        //         .then(res => setScramble(res.data))
-        //         .catch(err => console.log(err))
-        // }
-
         if (selectedCube && difficulty) {
             fetchScramble(selectedCube, difficulty)
         }
@@ -163,8 +147,8 @@ function Homepage() {
                     <div className="leftbar">
                         <p className="leftbarText">Learn how to solve Rubik's cube</p>
                         <div className="cubes-img-conatiner">
-                            <img src={cubes} alt="cubes" style={{ width: '300px', height: '100px',textAlign:'center', objectFit:'contain'}}/>
-                            
+                            <img src={cubes} alt="cubes" style={{ width: '300px', height: '100px', textAlign: 'center', objectFit: 'contain' }} />
+
                         </div>
                         <select className="dropdown" value={selectedCube} onChange={handleCubeType}>
                             <option value="--"></option>
@@ -181,8 +165,9 @@ function Homepage() {
                     <div className="leftbar2"><h3 className="leftbar2Text">Average time:{stats.average}</h3></div>
                 </div>
                 <div className="rightbar">
-                    <span className="rightbar-link" onClick={() => navigate('/profile')} role="link">Profile</span><br />
-                    <span className="rightbar-link" onClick={() => navigate('/report')} role="link">View report</span><br />
+                    <span className="rightbar-link" onClick={() => navigate('/profile')} role="link">Profile</span><br/>
+                    <span className="rightbar-link" onClick={() => navigate('/report')} role="link">View report</span><br/>
+                    <span className="rightbar-link" onClick={() => navigate('/supervisor')} role="link">Be supervisor</span><br/>
                     <span className="rightbar-link" onClick={() => navigate('/settings')} role="link">Settings</span>
                 </div>
             </div>

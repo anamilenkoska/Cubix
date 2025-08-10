@@ -14,12 +14,6 @@ function Report() {
         if (!user) return
         api.get(`/attempts/last/${user.id}`)
             .then(res => {
-                // const data=res.data
-                // setReport({
-                //     username:data.username,
-                //     cubeType:data.cubeType,
-
-                // })
                 setReport(res.data)
             })
             .catch(err => {
@@ -28,7 +22,7 @@ function Report() {
     }, [user])
 
     if (!user) {
-        return <p>Please log in to view your reports</p>
+        return <p>Please log in to view your report</p>
     }
     if (!report) {
         return <p>Loading...</p>
@@ -45,7 +39,6 @@ function Report() {
                 <div className="username-row">
                     <img src={icon} alt="User icon" className="user-icon" />
                     <p className="username"><strong>{report.username}</strong></p>
-
                 </div>
                 <div className="username">
                     <p><strong>Cube type: </strong>{report.cubeType}</p>
