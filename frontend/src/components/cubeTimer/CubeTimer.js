@@ -5,22 +5,8 @@ import './styles.css'
 const CubeTimer=({scrambleId,cubeType,setScramble,userId,refreshStats})=>{
     const [timer,setTimer]=useState(0)
     const [status,setStatus]=useState('idle')
-    //const [userId,setUserId]=useState(null)
     const intervalRef=useRef(null)
     const holdTimeoutRef=useRef(null)
-
-    //fetch user
-    // useEffect(()=>{
-    //     const fetchUser=async()=>{
-    //         try{
-    //             const res=await api.get('/users/session',{withCredentials:true})
-    //             setUserId(res.data.user.id)
-    //         }catch(err){
-    //             console.log("Session error:",err)
-    //         }
-    //     }
-    //     fetchUser()
-    // },[])
 
     useEffect(()=>{
         const handleKeyDown=(e)=>{
@@ -101,8 +87,8 @@ const CubeTimer=({scrambleId,cubeType,setScramble,userId,refreshStats})=>{
     const fetchNewScramble=async()=>{
         if(!cubeType) return
         try{
-            const res=await api.get(`/scrambles/${cubeType}`)
-            setScramble(res.data)
+            const result=await api.get(`/scrambles/${cubeType}`)
+            setScramble(result.data)
         }catch(err){
             console.log('Error:',err)
         }
