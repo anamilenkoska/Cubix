@@ -9,7 +9,7 @@
 // app.use(express.json())
 // app.use(express.urlencoded({extended : true}));
 // app.use(cors({
-//    origin: 'http://88.200.63.148:3002',
+//    origin: 'http://88.200.63.148:3004',
 //    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
 //    credentials: true
 // }))
@@ -58,63 +58,46 @@
 
 const express = require('express');
 const serverless = require('serverless-http');
+require('dotenv').config();
 const cors = require('cors');
 const session = require('express-session');
-const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../.env') }); // load env from backend/.env
 const DB = require('../DB/dbConn.js');
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS setup (adjust origin as needed)
 app.use(cors({
-  origin: 'http://88.200.63.148:3002',
-  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
-  credentials: true
+    origin: process.env.CLIENT_URL || '*',
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
+    credentials: true
 }));
 
-// Session setup
 app.use(session({
-  secret: 'secret_key',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60,
-    secure: false
-  }
+    secret: 'secret_key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { httpOnly: true, maxAge: 1000 * 60 * 60, secure: false }
 }));
-
-// Example root route
-app.get('/', async (req, res) => {
-  try {
-    const cubes = await DB.allCubes();
-    res.json(cubes);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-});
 
 // Routes
-const users = require('../routes/users');
-app.use('/users', users);
+app.get('/', async (req, res) => {
+    try {
+        const cubes = await DB.allCubes();
+        res.json(cubes);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 
-const scrambles = require('../routes/scrambles');
-app.use(scrambles);
+app.use('/users', require('../routes/users'));
+app.use(require('../routes/scrambles'));
+app.use('/attempts', require('../routes/attempts'));
+app.use('/algorithms', require('../routes/algorithms'));
+app.use('/profile', require('../routes/profiles'));
 
-const attempts = require('../routes/attempts');
-app.use('/attempts', attempts);
-
-const algorithms = require('../routes/algorithms');
-app.use('/algorithms', algorithms);
-
-const profile = require('../routes/profiles');
-app.use('/profile', profile);
-
-// Export as serverless function
-module.exports = serverless(app);
+// Export for Vercel
+module.exports = app;
+module.exports.handler = serverless(app);
