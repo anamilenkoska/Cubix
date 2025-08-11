@@ -75,15 +75,6 @@ users.post('/login', async (req, res) => {
 })
 
 users.get('/session', async(req,res,next)=>{
-    // try{
-    //     console.log("session data: ")
-    //     console.log(req.session)
-    //     res.json(res.session)
-    // }catch(e){
-    //     console.log(e)
-    //     res.sendStatus(500)
-    //     next()
-    // }
     if(req.session.user){
         res.status(200).json({user:req.session.user})
     }else{
